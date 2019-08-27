@@ -603,6 +603,12 @@ var buildFormInputs = function (fig) {
         ) {
             addInputsBasic('text', $self);
         }
+          else if (
+            $self.is('input[type="number"]') ||
+            $self.is('input') && !$self.attr('type')
+        ) {
+            addInputsBasic('number', $self);
+        }
         else if($self.is('input[type="password"]')) {
             addInputsBasic('password', $self);
         }
@@ -648,6 +654,7 @@ var buildFormInputs = function (fig) {
     else {
         addInputsBasic('button', 'input[type="button"], button, input[type="submit"]');
         addInputsBasic('text', 'input[type="text"]');
+            addInputsBasic('text', 'input[type="number"]');
         addInputsBasic('password', 'input[type="password"]');
         addInputsBasic('email', 'input[type="email"]');
         addInputsBasic('url', 'input[type="url"]');
