@@ -506,6 +506,20 @@ var createInputText = function (fig) {
     return self;
 };
 
+     var createInputNumber = function (fig) {
+        var my = {},
+            self = createInput(fig, my);
+
+        self.getType = function () {
+            return 'text';
+        };
+
+        self.$().on('change keyup keydown', function (e) {
+            my.publishChange(e, this);
+        });
+
+        return self;
+    };
 var createInputTextarea = function (fig) {
     var my = {},
         self = createInput(fig, my);
@@ -539,6 +553,7 @@ var buildFormInputs = function (fig) {
     var constructor = fig.constructorOverride || {
         button: createInputButton,
         text: createInputText,
+         number: createInputNumber,
         url: createInputURL,
         email: createInputEmail,
         password: createInputPassword,
@@ -603,6 +618,12 @@ var buildFormInputs = function (fig) {
         ) {
             addInputsBasic('text', $self);
         }
+          else if (
+            $self.is('input[type="number"]') ||
+            $self.is('input') && !$self.attr('type')
+        ) {
+            addInputsBasic('number', $self);
+        }
         else if($self.is('input[type="password"]')) {
             addInputsBasic('password', $self);
         }
@@ -648,6 +669,7 @@ var buildFormInputs = function (fig) {
     else {
         addInputsBasic('button', 'input[type="button"], button, input[type="submit"]');
         addInputsBasic('text', 'input[type="text"]');
+            addInputsBasic('text', 'input[type="number"]');
         addInputsBasic('password', 'input[type="password"]');
         addInputsBasic('email', 'input[type="email"]');
         addInputsBasic('url', 'input[type="url"]');
